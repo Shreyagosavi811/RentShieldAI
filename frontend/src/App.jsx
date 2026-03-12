@@ -79,15 +79,16 @@ export default function App() {
               className="min-h-screen bg-gray-50"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
-
               {/* HERO SECTION */}
-              <section className="hero-section relative overflow-hidden pt-16 pb-24 px-6 bg-blue-900">
+              <section className="relative overflow-hidden pt-16 pb-24 px-6 bg-blue-900">
                 <div className="max-w-4xl mx-auto text-center text-white">
-
                   <h1 className="text-4xl md:text-6xl font-bold mb-6">
                     Find a Safe, Fair, and
                     <br />
-                    <span className="text-blue-300">Trustworthy PG</span> with AI
+                    <span className="text-blue-300">
+                      Trustworthy PG
+                    </span>{" "}
+                    with AI
                   </h1>
 
                   <div className="mb-8">
@@ -143,8 +144,10 @@ export default function App() {
 
         {/* SIGNUP PAGE */}
         <Route path="/signup" element={<SignUp />} />
+
+        {/* LOGIN PAGE */}
+        <Route path="/login" element={<Login />} />
       </Routes>
-      <Route path="/login" element={<Login />} />
     </>
   );
 }
