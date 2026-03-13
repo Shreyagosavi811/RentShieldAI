@@ -1,7 +1,7 @@
 import React from 'react'
 import {Routes, Route} from 'react-router-dom';
 import Navbar from '../components/Navbar'
-import RentShieldLanding from '../components/RentshieldLandingPage';
+// import RentShieldLanding from '../components/RentshieldLandingPage';
 
 function CustomeRoutes() {
   return (
