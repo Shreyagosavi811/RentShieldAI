@@ -1,8 +1,8 @@
 import './App.css'
-// import CustomeRoutes from './routes/CustomeRoutes'
-import LandingPage from './components/LandingPage'
+import CustomeRoutes from './routes/CustomeRoutes'
+
 export default function App() {
-return (
-  <LandingPage/>
+  return (
+    <CustomeRoutes />
   )
 }
