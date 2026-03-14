@@ -1,34 +1,37 @@
 import { useState } from "react";
+import { loginUser } from "../services/authService";
+import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import { useContext } from "react";
 
-export default function SignUp() {
+export default function Login() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
-  const [formData, setFormData] = useState({
-    name: "",
+
+  const [form, setForm] = useState({
     email: "",
-    password: "",
-    confirmPassword: ""
+    password: ""
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setForm({
+      ...form,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-      return;
+    // simulate login success
+    try {
+      const data = await loginUser(form);
+      login(data.token);
+      navigate("/");
+    } catch (error) {
+      alert(error.response?.data?.message || "Login failed");
     }
-
-    alert("Signup Successful!");
-
-    navigate("/");
   };
 
   return (
@@ -38,25 +41,15 @@ export default function SignUp() {
 
         {/* Title */}
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">
-          Create Account
+          Welcome Back
         </h2>
 
         <p className="text-sm text-gray-500 text-center mb-6">
-          Join RentShield AI and find safe PGs
+          Login to your RentShield AI account
         </p>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-
-          {/* Name */}
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            required
-            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onChange={handleChange}
-          />
 
           {/* Email */}
           <input
@@ -78,22 +71,16 @@ export default function SignUp() {
             onChange={handleChange}
           />
 
-          {/* Confirm Password */}
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            required
-            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onChange={handleChange}
-          />
 
-          {/* Signup Button */}
+          <p className="text-right text-sm text-blue-600 cursor-pointer">
+            Forgot Password?</p>
+
+          {/* Login Button */}
           <button
             type="submit"
             className="w-full py-3 text-white font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 transition"
           >
-            Sign Up
+            Log In
           </button>
         </form>
 
@@ -104,14 +91,14 @@ export default function SignUp() {
           <div className="flex-1 border-t"></div>
         </div>
 
-        {/* Login Link */}
+        {/* Signup Link */}
         <p className="text-center text-sm text-gray-600">
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <Link
-            to="/login"
+            to="/signup"
             className="text-blue-600 font-semibold hover:underline"
           >
-            Log in
+            Sign Up
           </Link>
         </p>
 

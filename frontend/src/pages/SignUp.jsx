@@ -1,28 +1,39 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { registerUser } from "../services/authService.js";
 
-export default function Login() {
+export default function SignUp() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
+    name: "",
     email: "",
-    password: ""
+    password: "",
+    phone: "",
+    confirmPassword: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setForm({
+      ...form,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-
-    // simulate login success
-    alert("Login Successful!");
-
-    navigate("/");
+    setLoading(true);
+    
+    try {
+      await registerUser(form);
+      alert("Signup successful! Please log in.");
+      navigate("/login");
+    } catch (error) {
+      alert(error.response?.data?.message || "Signup failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,15 +43,25 @@ export default function Login() {
 
         {/* Title */}
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">
-          Welcome Back
+          Create Account
         </h2>
 
         <p className="text-sm text-gray-500 text-center mb-6">
-          Login to your RentShield AI account
+          Join RentShield AI and find safe PGs
         </p>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
+
+          {/* Name */}
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            required
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleChange}
+          />
 
           {/* Email */}
           <input
@@ -62,16 +83,22 @@ export default function Login() {
             onChange={handleChange}
           />
 
+          {/* Confirm Password */}
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            required
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleChange}
+          />
 
-          <p className="text-right text-sm text-blue-600 cursor-pointer">
-           Forgot Password?</p>
-
-          {/* Login Button */}
+          {/* Signup Button */}
           <button
             type="submit"
             className="w-full py-3 text-white font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 transition"
           >
-            Log In
+            Sign Up
           </button>
         </form>
 
@@ -82,14 +109,14 @@ export default function Login() {
           <div className="flex-1 border-t"></div>
         </div>
 
-        {/* Signup Link */}
+        {/* Login Link */}
         <p className="text-center text-sm text-gray-600">
-          Don't have an account?{" "}
+          Already have an account?{" "}
           <Link
-            to="/signup"
+            to="/login"
             className="text-blue-600 font-semibold hover:underline"
           >
-            Sign Up
+            Log in
           </Link>
         </p>
 
