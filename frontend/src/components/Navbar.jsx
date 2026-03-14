@@ -11,12 +11,9 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         
-        {/* Logo */}
+        {/* Logo wrapped in Link */}
         <Link to="/" className="flex items-center gap-2">
-          <div
-            className="w-9 h-9 rounded-lg flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #1a3a6b, #2563eb)" }}
-          >
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #1a3a6b, #2563eb)" }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path
                 d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z"
@@ -43,27 +40,25 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
-  <Link to="/features" className="text-sm font-medium hover:text-blue-600">
-    Features
-  </Link>
+          <Link to="/features" className="text-sm font-medium hover:text-blue-600">
+            Features
+          </Link>
+          <Link to="/login" className="text-sm font-medium hover:text-blue-600">
+            Login
+          </Link>
+          <Link to="/signup" className="text-sm font-medium hover:text-blue-600">
+            Signup
+          </Link>
+        </div>
 
-  <Link to="/login" className="text-sm font-medium hover:text-blue-600">
-    Login
-  </Link>
-
-  <Link to="/signup" className="text-sm font-medium hover:text-blue-600">
-    Signup
-  </Link>
-</div>
         {/* CTA Button */}
         <div className="hidden md:flex items-center gap-3">
-         <Link to="/signup">
-         <button
-         className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-         style={{ background: "linear-gradient(135deg, #1a3a6b, #2563eb)" }} >
-         Get Started
-         </button>
-         </Link>
+          <button
+            className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg active:scale-95"
+            style={{ background: "linear-gradient(135deg, #1a3a6b, #2563eb)", boxShadow: "0 4px 14px rgba(37,99,235,0.35)" }}
+          >
+            Get Started
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -77,28 +72,14 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4">
-          <Link to="/features" className="text-sm font-medium text-gray-700">
-            Features
-          </Link>
-
-          <Link to="/login" className="text-sm font-medium text-gray-700">
-            Login
-          </Link>
-
-          <Link to="/signup" className="text-sm font-medium text-gray-700">
-            Signup
-          </Link>
-
-          <Link to="/signup">
-            <button
-              className="mt-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white w-full"
-              style={{
-                background: "linear-gradient(135deg, #1a3a6b, #2563eb)",
-              }}
-            >
-              Get Started
-            </button>
-          </Link>
+          {["Features", "About Us", "Contact"].map((item) => (
+            <Link key={item} to={`/${item.toLowerCase().replace(" ", "")}`} className="text-sm font-medium text-gray-700">
+              {item}
+            </Link>
+          ))}
+          <button className="mt-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white w-full" style={{ background: "linear-gradient(135deg, #1a3a6b, #2563eb)" }}>
+            Get Started
+          </button>
         </div>
       )}
     </nav>
