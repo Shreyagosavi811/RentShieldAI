@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  // const navigate = Navigate();
 
   return (
     <nav
@@ -56,6 +57,7 @@ const Navbar = () => {
           <button
             className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg active:scale-95"
             style={{ background: "linear-gradient(135deg, #1a3a6b, #2563eb)", boxShadow: "0 4px 14px rgba(37,99,235,0.35)" }}
+            // onClick={() => navigate("/signup")}
           >
             Get Started
           </button>

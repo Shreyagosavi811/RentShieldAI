@@ -1,34 +1,39 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { registerUser } from "../services/authService.js";
 
 export default function SignUp() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    phone: "",
+    confirmPassword: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setForm({
+      ...form,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match");
-      return;
+    setLoading(true);
+    
+    try {
+      await registerUser(form);
+      alert("Signup successful! Please log in.");
+      navigate("/login");
+    } catch (error) {
+      alert(error.response?.data?.message || "Signup failed");
+    } finally {
+      setLoading(false);
     }
-
-    alert("Signup Successful!");
-
-    navigate("/");
   };
 
   return (
