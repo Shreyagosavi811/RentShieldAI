@@ -1,39 +1,39 @@
-import './App.css'
-import { useState } from 'react'
-import LandingPage from './components/LandingPage'
-import RentShieldSearch from './components/Rentshieldsearch_'
+import "./App.css";
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
+import SignUp from "./components/SignUp";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import LandingPage from "./components/LandingPage";
+import RentShieldSearch from "./components/Rentshieldsearch_";
 
 export default function App() {
-  // ── Page State ──────────────────────────────────────────────────────────────
-  // 'landing'  → show LandingPage
-  // 'search'   → show RentShieldSearch with the query user typed
-  const [page, setPage]   = useState('landing')
-  const [query, setQuery] = useState('')
+  const [page, setPage] = useState("landing");
+  const [query, setQuery] = useState("");
 
-  // Called from SearchBar (inside LandingPage) when user clicks "Search PGs"
-  // Receives { city, query } object
   const handleSearch = ({ city, query: q }) => {
-    const combined = [city, q].filter(Boolean).join(' · ')  // combine city + query
-    setQuery(combined)   // store query to pass to search page
-    setPage('search')    // switch to search results page
-  }
+    const combined = [city, q].filter(Boolean).join(" · ");
+    setQuery(combined);
+    setPage("search");
+  };
 
-  // Called from RentShieldSearch's Back button
   const handleBack = () => {
-    setPage('landing')   // go back to landing page
-    setQuery('')         // clear query
-  }
+    setPage("landing");
+    setQuery("");
+  };
 
   return (
     <>
-      {/* Conditionally render pages based on 'page' state */}
-      {page === 'landing' && (
-        <LandingPage onSearch={handleSearch} />
-      )}
-
-      {page === 'search' && (
-        <RentShieldSearch initialQuery={query} onBack={handleBack} />
-      )}
+      <Navbar />
+    <Routes>
+    
+        <Route path="/"  element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+         <Route path="/Rentshieldsearch_" element={<RentShieldSearch />} />
+      </Routes>
     </>
-  )
+  );
 }

@@ -1,9 +1,8 @@
 import React from 'react'
-import Navbar from './Navbar'
+
 import SearchBar from "./SearchBar";
 import FeatureCard from "./FeatureCard";
 import TestimonialCard from "./TestimonialCard";
-
 const features = [
   {
     icon: "📍",
@@ -58,11 +57,184 @@ const testimonials = [
   },
 ];
 
-// ── LandingPage Component ──────────────────────────────────────────────────────
-// Props:
-//   onSearch({ city, query }) – passed down to SearchBar; called when user searches
-//                               App.jsx receives this and switches to RentShieldSearch
-function LandingPage({ onSearch }) {
+// function Home() {
+//      const features = [
+//     {
+//       icon: "📍",
+//       title: "Real Location Data",
+//       description:
+//         "Verified, up-to-date location data for PGs and rental properties across your city.",
+//       color: "#2563eb",
+//     },
+//     {
+//       icon: "🤖",
+//       title: "AI Fairness Check",
+//       description:
+//         "AI-powered verification of safety and fairness of rental properties.",
+//       color: "#10b981",
+//     },
+//     {
+//       icon: "👤",
+//       title: "Landlord Reputation",
+//       description:
+//         "Comprehensive reputation scores based on tenant reviews and verified history.",
+//       color: "#f59e0b",
+//     },
+//     {
+//       icon: "📄",
+//       title: "Contract Risk Analysis",
+//       description:
+//         "Smart analysis of rental contracts to flag hidden risks and unfair clauses.",
+//       color: "#ef4444",
+//     },
+//     {
+//       icon: "🛡️",
+//       title: "Fake Listing Detector",
+//       description:
+//         "AI-backed detection system to identify and flag fraudulent property listings.",
+//       color: "#8b5cf6",
+//     },
+//   ];
+
+//   const testimonials = [
+//     {
+//       name: "Arjun M.",
+//       role: "Engineering Student, Pune",
+//       text: "RentShield AI helped me avoid a fake PG listing that looked completely legit.",
+//       avatar: "A",
+//     },
+//     {
+//       name: "Priya K.",
+//       role: "MBA Student, Mumbai",
+//       text: "The landlord reputation feature gave me confidence to find a trustworthy PG.",
+//       avatar: "P",
+//     },
+//     {
+//       name: "Rohan S.",
+//       role: "Working Professional, Bangalore",
+//       text: "Contract risk analysis saved me from a clause that would have cost extra rent.",
+//       avatar: "R",
+//     },
+//   ];
+//   return (
+//     <div
+//               className="min-h-screen bg-gray-50"
+//               style={{ fontFamily: "'DM Sans', sans-serif" }}
+//             >
+//               {/* HERO SECTION */}
+//               <section className="relative overflow-hidden pt-16 pb-24 px-6 bg-blue-900">
+//                 <div className="max-w-4xl mx-auto text-center text-white">
+//                   <h1 className="text-4xl md:text-6xl font-bold mb-6">
+//                     Find a Safe, Fair, and
+//                     <br />
+//                     <span className="text-blue-300">
+//                       Trustworthy PG
+//                     </span>{" "}
+//                     with AI
+//                   </h1>
+
+//                   <div className="mb-8">
+//                     <SearchBar />
+//                   </div>
+
+//                   <p className="text-white/80 text-sm max-w-xl mx-auto mb-8">
+//                     RentShield AI helps students and renters verify safety and
+//                     fairness of rental properties and PGs.
+//                   </p>
+//                 </div>
+//               </section>
+
+//               {/* FEATURES */}
+//               <section className="py-20 px-6 bg-white">
+//                 <div className="max-w-6xl mx-auto text-center mb-12">
+//                   <h2 className="text-3xl font-bold text-gray-900">
+//                     How RentShield Works
+//                   </h2>
+//                 </div>
+
+//                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 max-w-6xl mx-auto">
+//                   {features.map((f) => (
+//                     <FeatureCard key={f.title} {...f} />
+//                   ))}
+//                 </div>
+//               </section>
+
+//               {/* TESTIMONIALS */}
+//               <section className="py-12 px-6 bg-white border-t border-gray-100">
+//         <div className="max-w-5xl mx-auto">
+//           <p className="text-center text-xs text-gray-400 font-semibold uppercase tracking-widest mb-8">
+//             Trusted Across Universities
+//           </p>
+//           <div className="flex flex-wrap items-center justify-center gap-8 opacity-60">
+//             {[
+//               { name: "Washington University", abbr: "WU" },
+//               { name: "USU",                   abbr: "USU" },
+//               { name: "Utah State",            abbr: "USU" },
+//               { name: "Cornell",               abbr: "CU" },
+//               { name: "University",            abbr: "UNV" },
+//               { name: "UHA University",        abbr: "UHA" },
+//             ].map((u, i) => (
+//               <div key={i} className="flex items-center gap-2">
+//                 <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ background: "#1a3a6b" }}>
+//                   {u.abbr.charAt(0)}
+//                 </div>
+//                 <span className="text-xs font-semibold text-gray-600">{u.name}</span>
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+
+//               {/* FOOTER */}
+//                <footer style={{ background: "#0f1f3d" }} className="py-12 px-6 text-white">
+//         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+//           {/* Brand */}
+//           <div className="col-span-2 md:col-span-1">
+//             <div className="flex items-center gap-2 mb-4">
+//               <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #2563eb, #7c3aed)" }}>
+//                 <span className="text-white text-xs font-bold">RS</span>
+//               </div>
+//               <span className="font-bold text-white">RentShield AI</span>
+//             </div>
+//             <p className="text-xs text-gray-400 leading-relaxed">
+//               Helping students and renters find safe, fair, and trustworthy rental properties.
+//             </p>
+//           </div>
+
+//           {[
+//             { title: "Site",  links: ["Home", "PGs", "About Us", "Contact Us"] },
+//             { title: "About", links: ["Blog", "Blog", "Contact"] },
+//             { title: "Helps", links: ["Blog", "Contact"] },
+//           ].map((col) => (
+//             <div key={col.title}>
+//               <h4 className="text-xs font-bold text-gray-300 uppercase tracking-wider mb-4">{col.title}</h4>
+//               <ul className="space-y-2">
+//                 {col.links.map((link, i) => (
+//                   <li key={i}>
+//                     <a href="#" className="text-xs text-gray-400 hover:text-white transition-colors">{link}</a>
+//                   </li>
+//                 ))}
+//               </ul>
+//             </div>
+//           ))}
+//         </div>
+
+//         {/* Social + Copyright */}
+//         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+//           <p className="text-xs text-gray-500">© 2022 RentShield Reserved</p>
+//           <div className="flex items-center gap-4">
+//             {["f", "𝕏", "ig", "▶"].map((icon, i) => (
+//               <button key={i} className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-xs text-white">
+//                 {icon}
+//               </button>
+//             ))}
+//           </div>
+//         </div>
+//       </footer>
+//             </div>
+//   )
+// }
+function Home({ onSearch }) {
   return (
     <div className="min-h-screen bg-gray-50" style={{ fontFamily: "'DM Sans', sans-serif" }}>
       <style>{`
@@ -282,4 +454,4 @@ function LandingPage({ onSearch }) {
   );
 }
 
-export default LandingPage;
+export default Home
