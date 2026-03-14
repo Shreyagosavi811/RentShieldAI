@@ -9,18 +9,12 @@ import LandingPage from "./components/LandingPage";
 export default function App() {
   return (
     <>
+    <Navbar />
       <Routes>
         {/* HOME PAGE */}
-        <Route
-          path="/home"
-          element={<><Navbar /><Home /></>}
+        <Route  path="/" element={<><Home /></>}
         />
-        {/* LANDING PAGE */}
-        <Route path="/" element={<LandingPage />} />
-
-        {/* SIGNUP PAGE */}
         <Route path="/signup" element={<SignUp />} />
-
         {/* LOGIN PAGE */}
         <Route path="/login" element={<Login />} />
       </Routes>

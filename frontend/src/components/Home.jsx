@@ -121,6 +121,8 @@ function Home() {
                 </div>
               </section>
 
+              
+
               {/* FOOTER */}
               <footer className="py-12 px-6 bg-gray-900 text-white text-center">
                 <p className="text-sm">
