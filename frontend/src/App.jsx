@@ -1,39 +1,28 @@
-import './App.css'
-import { useState } from 'react'
-import LandingPage from './components/LandingPage'
-import RentShieldSearch from './components/Rentshieldsearch_'
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Team from "./pages/Team";
+import About from "./pages/About";
+import RentShieldSearch from "./components/Rentshieldsearch_";
+
 
 export default function App() {
-  // ── Page State ──────────────────────────────────────────────────────────────
-  // 'landing'  → show LandingPage
-  // 'search'   → show RentShieldSearch with the query user typed
-  const [page, setPage]   = useState('landing')
-  const [query, setQuery] = useState('')
-
-  // Called from SearchBar (inside LandingPage) when user clicks "Search PGs"
-  // Receives { city, query } object
-  const handleSearch = ({ city, query: q }) => {
-    const combined = [city, q].filter(Boolean).join(' · ')  // combine city + query
-    setQuery(combined)   // store query to pass to search page
-    setPage('search')    // switch to search results page
-  }
-
-  // Called from RentShieldSearch's Back button
-  const handleBack = () => {
-    setPage('landing')   // go back to landing page
-    setQuery('')         // clear query
-  }
+ 
 
   return (
     <>
-      {/* Conditionally render pages based on 'page' state */}
-      {page === 'landing' && (
-        <LandingPage onSearch={handleSearch} />
-      )}
-
-      {page === 'search' && (
-        <RentShieldSearch initialQuery={query} onBack={handleBack} />
-      )}
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/team" element={<Team/>}/>
+        <Route path="/about" element={<About/>}/>
+        <Route path="/Rentshieldsearch_" element={<RentShieldSearch />} />
+      </Routes>
     </>
-  )
+  );
 }

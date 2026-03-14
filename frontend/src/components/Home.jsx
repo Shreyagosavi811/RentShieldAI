@@ -1,9 +1,8 @@
 import React from 'react'
-import Navbar from './Navbar'
+
 import SearchBar from "./SearchBar";
 import FeatureCard from "./FeatureCard";
 import TestimonialCard from "./TestimonialCard";
-
 const features = [
   {
     icon: "📍",
@@ -58,11 +57,7 @@ const testimonials = [
   },
 ];
 
-// ── LandingPage Component ──────────────────────────────────────────────────────
-// Props:
-//   onSearch({ city, query }) – passed down to SearchBar; called when user searches
-//                               App.jsx receives this and switches to RentShieldSearch
-function LandingPage({ onSearch }) {
+function Home({ onSearch }) {
   return (
     <div className="min-h-screen bg-gray-50" style={{ fontFamily: "'DM Sans', sans-serif" }}>
       <style>{`
@@ -238,7 +233,10 @@ function LandingPage({ onSearch }) {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #2563eb, #7c3aed)" }}>
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center"
+                style={{ background: "linear-gradient(135deg, #2563eb, #7c3aed)" }}
+              >
                 <span className="text-white text-xs font-bold">RS</span>
               </div>
               <span className="font-bold text-white">RentShield AI</span>
@@ -249,16 +247,23 @@ function LandingPage({ onSearch }) {
           </div>
 
           {[
-            { title: "Site",  links: ["Home", "PGs", "About Us", "Contact Us"] },
+            { title: "Site", links: ["Home", "PGs", "About Us", "Contact Us"] },
             { title: "About", links: ["Blog", "Blog", "Contact"] },
             { title: "Helps", links: ["Blog", "Contact"] },
           ].map((col) => (
             <div key={col.title}>
-              <h4 className="text-xs font-bold text-gray-300 uppercase tracking-wider mb-4">{col.title}</h4>
+              <h4 className="text-xs font-bold text-gray-300 uppercase tracking-wider mb-4">
+                {col.title}
+              </h4>
               <ul className="space-y-2">
                 {col.links.map((link, i) => (
                   <li key={i}>
-                    <a href="#" className="text-xs text-gray-400 hover:text-white transition-colors">{link}</a>
+                    <a
+                      href="#"
+                      className="text-xs text-gray-400 hover:text-white transition-colors"
+                    >
+                      {link}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -271,7 +276,10 @@ function LandingPage({ onSearch }) {
           <p className="text-xs text-gray-500">© 2022 RentShield Reserved</p>
           <div className="flex items-center gap-4">
             {["f", "𝕏", "ig", "▶"].map((icon, i) => (
-              <button key={i} className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-xs text-white">
+              <button
+                key={i}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-xs text-white"
+              >
                 {icon}
               </button>
             ))}
@@ -282,4 +290,4 @@ function LandingPage({ onSearch }) {
   );
 }
 
-export default LandingPage;
+export default Home
