@@ -1,22 +1,70 @@
-import { Routes, Route } from "react-router-dom"; // <--- ADD THIS LINE
-import Navbar from "./components/Navbar";
-import SignUp from "./components/SignUp";
-import Login from "./components/Login";
-import SearchBar from "./components/SearchBar";
-import FeatureCard from "./components/FeatureCard";
-import TestimonialCard from "./components/TestimonialCard";
+import React from 'react'
 
-export default function App() {
+import SearchBar from "./SearchBar";
+import FeatureCard from "./FeatureCard";
+import TestimonialCard from "./TestimonialCard";
+
+function Home() {
+     const features = [
+    {
+      icon: "📍",
+      title: "Real Location Data",
+      description:
+        "Verified, up-to-date location data for PGs and rental properties across your city.",
+      color: "#2563eb",
+    },
+    {
+      icon: "🤖",
+      title: "AI Fairness Check",
+      description:
+        "AI-powered verification of safety and fairness of rental properties.",
+      color: "#10b981",
+    },
+    {
+      icon: "👤",
+      title: "Landlord Reputation",
+      description:
+        "Comprehensive reputation scores based on tenant reviews and verified history.",
+      color: "#f59e0b",
+    },
+    {
+      icon: "📄",
+      title: "Contract Risk Analysis",
+      description:
+        "Smart analysis of rental contracts to flag hidden risks and unfair clauses.",
+      color: "#ef4444",
+    },
+    {
+      icon: "🛡️",
+      title: "Fake Listing Detector",
+      description:
+        "AI-backed detection system to identify and flag fraudulent property listings.",
+      color: "#8b5cf6",
+    },
+  ];
+
+  const testimonials = [
+    {
+      name: "Arjun M.",
+      role: "Engineering Student, Pune",
+      text: "RentShield AI helped me avoid a fake PG listing that looked completely legit.",
+      avatar: "A",
+    },
+    {
+      name: "Priya K.",
+      role: "MBA Student, Mumbai",
+      text: "The landlord reputation feature gave me confidence to find a trustworthy PG.",
+      avatar: "P",
+    },
+    {
+      name: "Rohan S.",
+      role: "Working Professional, Bangalore",
+      text: "Contract risk analysis saved me from a clause that would have cost extra rent.",
+      avatar: "R",
+    },
+  ];
   return (
-    <>
-      <Navbar />
-
-      <Routes>
-        {/* HOME PAGE */}
-        <Route
-          path="/"
-          element={
-            <div
+    <div
               className="min-h-screen bg-gray-50"
               style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
@@ -73,6 +121,8 @@ export default function App() {
                 </div>
               </section>
 
+              
+
               {/* FOOTER */}
               <footer className="py-12 px-6 bg-gray-900 text-white text-center">
                 <p className="text-sm">
@@ -80,16 +130,7 @@ export default function App() {
                 </p>
               </footer>
             </div>
-          }
-        />
-
-        {/* SIGNUP PAGE */}
-        <Route path="/signup" element={<SignUp />} />
-
-        {/* LOGIN PAGE */}
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </>
-  );
+  )
 }
 
+export default Home

@@ -1,28 +1,37 @@
 import { useState } from "react";
+import { loginUser } from "../services/authService";
+import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import { useContext } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
-  const [formData, setFormData] = useState({
+
+  const [form, setForm] = useState({
     email: "",
     password: ""
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setForm({
+      ...form,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // simulate login success
-    alert("Login Successful!");
-
-    navigate("/");
+    try {
+      const data = await loginUser(form);
+      login(data.token);
+      navigate("/");
+    } catch (error) {
+      alert(error.response?.data?.message || "Login failed");
+    }
   };
 
   return (
@@ -64,7 +73,7 @@ export default function Login() {
 
 
           <p className="text-right text-sm text-blue-600 cursor-pointer">
-           Forgot Password?</p>
+            Forgot Password?</p>
 
           {/* Login Button */}
           <button
