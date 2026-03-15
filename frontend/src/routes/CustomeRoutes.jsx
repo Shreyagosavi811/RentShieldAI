@@ -22,4 +22,5 @@ function CustomRoutes() {
   );
 }
 
-export default CustomRoutes;
+export default CustomeRoutes  
+
