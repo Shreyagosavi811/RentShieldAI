@@ -6,7 +6,7 @@ export const getCoordinates = async (location ) => {
             params: {
                 q: location,
                 format: "json",
-                limit: 1,
+                limit: 5,
             },
             headers: {
                 "User-Agent": "RentShieldAI"
@@ -15,7 +15,7 @@ export const getCoordinates = async (location ) => {
     );
     if(!response.data.length) {
         throw new Error("Location not found");
-    }
+    };
     return {
         lat: response.data[0].lat,
         lon: response.data[0].lon

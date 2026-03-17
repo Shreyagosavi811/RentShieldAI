@@ -101,8 +101,6 @@ function LandingPage() {
       `}</style>
 
       {/* NAVBAR */}
-      <Navbar />
-
       {/* HERO SECTION */}
       <section className="hero-section relative overflow-hidden pt-16 pb-24 px-6">
         {/* Decorative blobs */}

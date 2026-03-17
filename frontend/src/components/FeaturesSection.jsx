@@ -1,3 +1,6 @@
+import Footer from "./Footer";
+import Navbar from "./Navbar";
+
 const features = [
   {
     icon: "🛡",
@@ -23,6 +26,7 @@ const features = [
 
 const FeaturesSection = () => {
   return (
+    <>
     <section id="features" className="py-20 bg-gray-50">
       
       <div className="max-w-6xl mx-auto px-6">
@@ -65,6 +69,7 @@ const FeaturesSection = () => {
 
       </div>
     </section>
+    </>
   );
 };
 

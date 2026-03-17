@@ -12,7 +12,7 @@ export const getPlaceDetails = async (lat, lon, name) => {
                 params: {
                     query: name,
                     ll: `${lat},${lon}`,
-                    limit: 20
+                    limit: 1
                 }
             }
         );

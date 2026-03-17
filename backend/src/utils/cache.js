@@ -5,6 +5,4 @@ const cache = new NodeCache({
     checkperiod: 120,
 });
 
-export {
-    cache
-}
+export default cache;

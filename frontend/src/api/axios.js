@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({
+export const API = axios.create({
   baseURL: "http://localhost:5000/api",
 });
 
@@ -14,4 +14,16 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
-export default API;
+export const searchPGs = (location, page = 1) => {
+  return API.get(`/search?location=${location}&page=${page}`);
+};
+
+export const getLocationSuggestions = async (query) => {
+  const res = await axios.get(
+    `https://nominatim.openstreetmap.org/search?q=${query}&format=json&addressdetails=1`
+  );
+
+  return res.data;
+};
+
+export default axios;

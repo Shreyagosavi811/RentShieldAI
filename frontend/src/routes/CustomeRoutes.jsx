@@ -1,22 +1,26 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Login from "../components/Login";
-import Signup from "../components/Signup";
 import Navbar from "../components/Navbar";
-import FeatureCard from "../components/FeatureCard";
 import LandingPage from "../components/LandingPage";
-
+import About from '../pages/About'
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
+import FeaturesSection from "../components/FeaturesSection";
+import Home from "../pages/Home";
+import Team from "../pages/Team";
+import Profile from "../pages/Profile";
 function CustomRoutes() {
   return (
     <>
-      <Navbar />
-
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/features" element={<FeatureCard />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/features" element={<FeaturesSection />} />
+        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/about" element={<About/>}/>
+        <Route path="/team" element={<Team/>}/>
       </Routes>
     </>
   );

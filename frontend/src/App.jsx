@@ -6,20 +6,12 @@ import Login from "./pages/Login";
 import SearchBar from "./components/SearchBar";
 import FeatureCard from "./components/FeatureCard";
 import TestimonialCard from "./components/TestimonialCard";
+import CustomRoutes from "./routes/CustomeRoutes";
 
 export default function App() {
   return (
     <>
-      <Routes>
-        {/* HOME PAGE */}
-       
-        <Route path="/" element={<Home />} />
-        {/* SIGNUP PAGE */}
-        <Route path="/signup" element={<SignUp />} />
-
-        {/* LOGIN PAGE */}
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      <CustomRoutes/>
     </>
   );
 }

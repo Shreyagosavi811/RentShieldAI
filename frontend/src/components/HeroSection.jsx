@@ -1,6 +1,12 @@
 import SearchBar from "./SearchBar";
 
-export default function HeroSection() {
+export default function HeroSection({ onSearch }) {
+
+  const handleSearch = (location) => {
+     console.log("HeroSection received:", location);
+    onSearch(location, 1);
+  };
+
   return (
     <section className="relative overflow-hidden pt-16 pb-24 px-6 bg-blue-900 text-white text-center">
       <div className="max-w-4xl mx-auto">
@@ -8,7 +14,7 @@ export default function HeroSection() {
           Find a Safe, Fair, and <br />
           <span className="text-blue-300">Trustworthy PG</span> with AI
         </h1>
-        <div className="mb-8"><SearchBar /></div>
+        <div className="mb-8"><SearchBar onLocationSelect={handleSearch}/></div>
         <p className="text-white/80 text-sm max-w-xl mx-auto mb-8">
           RentShield AI helps students and renters verify safety and fairness of rental properties and PGs.
         </p>
