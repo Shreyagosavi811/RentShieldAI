@@ -91,7 +91,7 @@ function Home({ onSearch }) {
         }
       `}</style>
 
-      {/* NAVBAR */}
+     
     
 
       {/* HERO SECTION */}

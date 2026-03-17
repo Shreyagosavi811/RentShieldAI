@@ -1,128 +1,118 @@
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  Avatar,
+  Menu,
+  MenuItem,
+  IconButton
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
 
-const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+export default function Navbar() {
+  const navigate = useNavigate();
+  const { auth, logout } = useAuth();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const token = auth.token;
+  const role = auth.role;
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    logout();
+    handleMenuClose();
+    navigate("/login");
+  };
 
   return (
-    <nav
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
-      className="w-full bg-white shadow-sm sticky top-0 z-50"
-    >
-      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <AppBar position="static">
+      <Toolbar>
 
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div
-            className="w-9 h-9 rounded-lg flex items-center justify-center"
-            style={{
-              background: "linear-gradient(135deg, #1a3a6b, #2563eb)",
-            }}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z"
-                fill="white"
-                opacity="0.9"
-              />
-              <circle cx="12" cy="13" r="3" fill="#f97316" />
-              <path
-                d="M12 10v-3"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
+        {/* LOGO */}
+        <Typography
+          variant="h6"
+          sx={{ flexGrow: 1, cursor: "pointer", fontWeight: "bold" }}
+          onClick={() => navigate("/")}
+        >
+          RentShield AI
+        </Typography>
 
-          <span
-            className="text-xl font-bold"
-            style={{ color: "#1a3a6b", letterSpacing: "-0.5px" }}
-          >
-            RentShield <span style={{ color: "#2563eb" }}>AI</span>
-          </span>
-        </Link>
+        {/* NOT LOGGED IN */}
+        {!token && (
+          <>
+            <Button color="inherit" onClick={() => navigate("/login")}>
+              Login
+            </Button>
+            <Button color="inherit" onClick={() => navigate("/register")}>
+              Register
+            </Button>
+          </>
+        )}
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link to="/features" className="text-sm font-medium hover:text-blue-600 transition">
-            Features
-          </Link>
+        {/* LOGGED IN */}
+        {token && (
+          <Box display="flex" alignItems="center" gap={1}>
 
-          <Link to="/about" className="text-sm font-medium hover:text-blue-600 transition">
-            About
-          </Link>
+            {!role && (
+              <Button onClick={() => navigate("/select-role")} color="inherit">
+                Select Role
+              </Button>
+            )}
 
-          <Link to="/team" className="text-sm font-medium hover:text-blue-600 transition">
-            Team
-          </Link>
+            {role === "student" && (
+              <>
+                <Button onClick={() => navigate("/dashboard")} color="inherit">
+                  Dashboard
+                </Button>
+                <Button color="inherit">Search PG</Button>
+              </>
+            )}
 
-          <Link to="/profile" className="text-sm font-medium hover:text-blue-600 transition">
-            Profile
-          </Link>
+            {role === "landlord" && (
+              <>
+                <Button onClick={() => navigate("/dashboard")} color="inherit">
+                  Dashboard
+                </Button>
+                <Button color="inherit">Add Property</Button>
+              </>
+            )}
 
-          <Link to="/login" className="text-sm font-medium hover:text-blue-600 transition">
-            Login
-          </Link>
-        </div>
+            {/* 🔥 AVATAR */}
+            <IconButton onClick={handleMenuOpen} sx={{ ml: 1 }}>
+              <Avatar>
+                {auth?.name ? auth.name[0].toUpperCase() : "U"}
+              </Avatar>
+            </IconButton>
 
-        {/* CTA Button */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link
-            to="/signup"
-            className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg active:scale-95"
-            style={{ background: "linear-gradient(135deg, #1a3a6b, #2563eb)", boxShadow: "0 4px 14px rgba(37,99,235,0.35)" }}
-          >
-            Get Started
-          </Link>
-        </div>
+            {/* 🔽 DROPDOWN MENU */}
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem onClick={() => navigate("/profile-setup")}>
+                Profile
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                Logout
+              </MenuItem>
+            </Menu>
 
-        {/* Mobile Menu Button */}
-        <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
-          <div className="w-5 h-0.5 bg-gray-700 mb-1"></div>
-          <div className="w-5 h-0.5 bg-gray-700 mb-1"></div>
-          <div className="w-5 h-0.5 bg-gray-700"></div>
-        </button>
-
-      </div>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4">
-
-          <Link onClick={closeMenu} to="/features" className="text-sm font-medium text-gray-700">
-            Features
-          </Link>
-
-          <Link onClick={closeMenu} to="/about" className="text-sm font-medium text-gray-700">
-            About
-          </Link>
-
-          <Link onClick={closeMenu} to="/team" className="text-sm font-medium text-gray-700">
-            Team
-          </Link>
-
-          <Link onClick={closeMenu} to="/profile" className="text-sm font-medium text-gray-700">
-            Profile
-          </Link>
-
-          <Link onClick={closeMenu} to="/login" className="text-sm font-medium text-gray-700">
-            Login
-          </Link>
-
-          <Link
-            onClick={closeMenu}
-            to="/signup"
-            className="mt-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white text-center"
-            style={{ background: "linear-gradient(135deg, #1a3a6b, #2563eb)" }}
-          >
-            Get Started
-          </Link>
-
-        </div>
-      )}
-    </nav>
+          </Box>
+        )}
+      </Toolbar>
+    </AppBar>
   );
-};
-
-export default Navbar;
+}

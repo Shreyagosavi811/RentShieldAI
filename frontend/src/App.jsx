@@ -1,34 +1,97 @@
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
 
 import Home from "./pages/Home";
-import SignUp from "./pages/SignUp";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import Team from "./pages/Team";
-import About from "./pages/About";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import SelectRole from "./pages/Auth/SelectRole";
+import ProfileSetup from "./pages/Auth/ProfileSetup";
 
-import SearchBar from "./components/SearchBar";
-import FeatureCard from "./components/FeatureCard";
-import TestimonialCard from "./components/TestimonialCard";
-import RentShieldSearch from "./components/Rentshieldsearch_";
+import StudentDashboard from "./pages/Student/Dashboard";
+import LandlordDashboard from "./pages/Landlord/Dashboard";
+import PGSearch from "./pages/Student/PGSearch";
 
-export default function App() {
+import ProtectedRoute from "./components/ProtectedRoute";
+import RoleBasedRoute from "./components/RoleBasedRoute";
+import DashboardRouter from "./pages/DashboardRouter";
+
+function App() {
   return (
     <>
       <Navbar />
 
       <Routes>
+        {/* 🌐 PUBLIC */}
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/team" element={<Team />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/Rentshieldsearch_" element={<RentShieldSearch />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* 🔐 AUTH FLOW */}
+        <Route
+          path="/select-role"
+          element={
+            <ProtectedRoute>
+              <SelectRole />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile-setup"
+          element={
+            <ProtectedRoute>
+              <ProfileSetup />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* 🎯 MAIN DASHBOARD ROUTER */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardRouter />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* 🎓 STUDENT */}
+        <Route
+          path="/student/dashboard"
+          element={
+            <ProtectedRoute requireProfile>
+              <RoleBasedRoute allowedRole="student">
+                <StudentDashboard />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/search"
+          element={
+            <ProtectedRoute requireProfile>
+              <RoleBasedRoute allowedRole="student">
+                <PGSearch />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* 🏠 LANDLORD */}
+        <Route
+          path="/landlord/dashboard"
+          element={
+            <ProtectedRoute requireProfile>
+              <RoleBasedRoute allowedRole="landlord">
+                <LandlordDashboard />
+              </RoleBasedRoute>
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </>
   );
 }
+
+export default App;
