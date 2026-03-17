@@ -2,8 +2,10 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./src/config/db.js";
 import listingRoutes from "./src/routes/listingRoutes.js";
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
+// const authRoutes = require("./routes/authRoutes");
+import authRoutes from "./src/routes/authRoutes.js";
+import userRoutes from "./src/routes/userRoutes.js";
+// const userRoutes = require("./routes/userRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);

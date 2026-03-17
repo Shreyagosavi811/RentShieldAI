@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const connectDB = async () => {
   try {
 
-    await mongoose.connect("mongodb://127.0.0.1:27017/rentshield");
+    await mongoose.connect("mongodb+srv://new-user2:Adi932585@cluster0.zndrczg.mongodb.net/rentshield");
 
     console.log("Database Connected");
 
