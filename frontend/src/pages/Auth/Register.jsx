@@ -9,7 +9,6 @@ import {
   CardContent
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
 export default function Register() {
   const navigate = useNavigate();
 
@@ -18,20 +17,16 @@ export default function Register() {
     email: "",
     password: ""
   });
-
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
   const handleRegister = async () => {
     try {
       await axios.post("http://localhost:5000/api/auth/register", {
         ...form
       });
-
       alert("Registered Successfully!");
       navigate("/login");
-
     } catch (err) {
       alert("Error registering");
     }

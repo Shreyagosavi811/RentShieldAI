@@ -1,26 +1,17 @@
-import React from "react";
+
 import { Routes, Route } from "react-router-dom";
 
-import Login from "../components/Login";
-import Signup from "../components/Signup";
-import Navbar from "../components/Navbar";
-import FeatureCard from "../components/FeatureCard";
-import LandingPage from "../components/LandingPage";
+import Home from "../components/Home";
 
 function CustomRoutes() {
   return (
     <>
-      <Navbar />
-
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/features" element={<FeatureCard />} />
+       <Route path="/" element={<Home/>}/>
       </Routes>
     </>
   );
 }
 
-export default CustomeRoutes  
+export default CustomRoutes  
 
