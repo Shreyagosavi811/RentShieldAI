@@ -60,7 +60,7 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <Link
-            to="/register"
+            to="/login"
             className="hidden md:block bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-cyan-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/40 no-underline"
           >
             Get Started
