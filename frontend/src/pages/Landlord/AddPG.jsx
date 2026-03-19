@@ -67,7 +67,7 @@ const AddPG = () => {
       return setError("Please fill in all required fields");
     }
     console.log("PG Data:", form);
-    navigate("/landlord");
+    navigate("/landlord/dashboard");
   };
 
   const inputClass =

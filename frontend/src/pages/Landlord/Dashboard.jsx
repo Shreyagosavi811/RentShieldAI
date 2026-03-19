@@ -25,12 +25,12 @@ const Sidebar = ({ isOpen, collapsed, onClose, onToggleCollapse, user, onLogout 
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 left-0 h-full bg-slate-900 border-r border-white/10 z-50 flex flex-col
+          fixed top-0 left-0 w-64 min-h-screen bg-slate-900 border-r border-white/10 z-50 flex flex-col
           transition-all duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 lg:static lg:z-auto
+          lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen lg:z-auto lg:flex-shrink-0
           ${collapsed ? "lg:w-[68px]" : "lg:w-64"}
-          w-64
+
         `}
       >
         {/* Logo + collapse toggle */}
