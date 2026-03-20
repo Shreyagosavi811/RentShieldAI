@@ -7,6 +7,8 @@ import Register from "../pages/Register";
 import Dashboard from "../pages/Landlord/Dashboard";
 import DashboardTenants from "../pages/Tenants/Dashboard";
 import AddPG from "../pages/Landlord/AddPG";
+import Search from "../pages/Tenants/Search";
+import PGDetails from "../pages/Tenants/PGDatails";
 
 function CustomRoutes() {
   return (
@@ -24,6 +26,8 @@ function CustomRoutes() {
 
       {/* Tenant Routes will go here in the future */}
       <Route path="/tenant/dashboard" element={<DashboardTenants/>} />
+      <Route path="/search" element={<Search/>} />
+      <Route path="/pg/1" element={<PGDetails/>}/>
       </Routes>
     </>
   );
