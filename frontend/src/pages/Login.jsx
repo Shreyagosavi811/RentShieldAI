@@ -37,7 +37,7 @@ const Login = () => {
     if (fakeUser.role === "landlord") {
       navigate("/landlord");
     } else {
-      navigate("/tenant");
+      navigate("/tenant/dashboard");
     }
   };
 

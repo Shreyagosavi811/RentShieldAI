@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const sidebarLinks = [
-  { icon: "🏠", label: "Dashboard", to: "/tenant" },
+  { icon: "🏠", label: "Dashboard", to: "/tenant/dashboard" },
   { icon: "🔍", label: "Search PGs", to: "/search" },
   { icon: "❤️", label: "Saved Listings", to: "/tenant/saved" },
   { icon: "🤖", label: "AI Analysis", to: "/tenant/analysis" },
@@ -32,7 +32,7 @@ const quickActions = [
     icon: "❤️",
     title: "Saved Listings",
     desc: "View your bookmarked PGs",
-    to: "/tenant/saved",
+    to: "/tenant/dashboard",
     color: "from-rose-600/30 to-rose-500/10",
     border: "border-rose-500/20",
     badge: "0 Saved",
@@ -133,7 +133,7 @@ const Sidebar = ({ isOpen, collapsed, onClose, onToggleCollapse, user, onLogout 
         {/* Nav links */}
         <nav className={`flex-1 py-4 flex flex-col gap-1 overflow-y-auto ${collapsed ? "px-2" : "px-3"}`}>
           {sidebarLinks.map((link) => {
-            const isActive = location.pathname === link.to;
+            const isActive = location.pathname.startsWith(link.to);
             return (
               <Link
                 key={link.to}
