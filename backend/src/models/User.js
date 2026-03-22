@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-
+import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -19,8 +18,12 @@ const userSchema = new mongoose.Schema(
     // 🔥 ROLE SYSTEM
     role: {
       type: String,
-      enum: ["student", "landlord"],
+      enum: ["tenant", "landlord"],
       default: null
+    },
+    phone: {
+      type: String,
+      unique: true
     },
 
     // 🔥 PROFILE STATUS
@@ -32,4 +35,5 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+export default User;

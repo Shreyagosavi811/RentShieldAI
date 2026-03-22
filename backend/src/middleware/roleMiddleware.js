@@ -6,7 +6,7 @@ module.exports = (requiredRole) => {
     next();
   };
 };
-const User = require("../models/User");
+const User = require("../models/User.js");
 
 const decoded = jwt.verify(token, "secretkey");
 

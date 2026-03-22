@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import API from "../api/axios.js";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -20,21 +21,32 @@ const Register = () => {
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.name || !form.email || !form.phone || !form.password) {
+    if (!form.name || !form.email || !form.password) {
       return setError("All fields are required");
     }
+    try {
+      const {data} = await API.post("/auth/register", form);
 
-    // TEMP: Save user locally
-    localStorage.setItem("user", JSON.stringify(form));
+      console.log("Register response:", data); // ← add this
 
-    // Redirect
-    if (form.role === "landlord") {
-      navigate("/landlord");
-    } else {
-      navigate("/tenant");
+      localStorage.setItem("user", JSON.stringify({
+        token: data.token,
+        role: form.role,
+        name:form.name,
+        email: form.email,
+      }));
+
+      // Redirect
+      if (form.role === "landlord") {
+        navigate("/landlord/dashboard");
+      } else {
+        navigate("/tenant/dashboard");
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || "Error");
     }
   };
 
@@ -91,11 +103,10 @@ const Register = () => {
                 key={r}
                 type="button"
                 onClick={() => setForm({ ...form, role: r })}
-                className={`flex-1 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer capitalize ${
-                  form.role === r
+                className={`flex-1 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer capitalize ${form.role === r
                     ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/20"
                     : "text-white/40 hover:text-white/70"
-                }`}
+                  }`}
               >
                 {r === "tenant" ? "🏠 Tenant" : "🏢 Landlord"}
               </button>

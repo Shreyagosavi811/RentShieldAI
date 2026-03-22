@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,20 +25,30 @@ const Login = () => {
     if (!form.email || !form.password) {
       return setError("All fields are required");
     }
+    try {
 
-    // TEMP: Fake login (we connect backend later)
-    const fakeUser = {
-      email: form.email,
-      role: form.email.includes("landlord") ? "landlord" : "tenant",
-    };
+      useEffect(async () => {
+        const { data } = await API.post("/auth/login", form);
+        
+        console.log("Login response:", data); // ← add this
 
-    localStorage.setItem("user", JSON.stringify(fakeUser));
+        localStorage.setItem("user", JSON.stringify({
+          token: data.token,
+          role: data.role,
+          name: data.name,
+          email: data.email,
+        }));
 
-    // Redirect based on role
-    if (fakeUser.role === "landlord") {
-      navigate("/landlord");
-    } else {
-      navigate("/tenant/dashboard");
+        // Redirect based on role
+        if (data.user.role === "landlord") {
+          navigate("/landlord/dashboard");
+        } else {
+          navigate("/tenant/dashboard");
+        }
+      }, []);
+
+    } catch (error) {
+      setError(error.response?.data?.message || "Login failed");
     }
   };
 
