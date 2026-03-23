@@ -1,76 +1,77 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-const AuthContext = createContext();
-
-export const useAuth = () => useContext(AuthContext);
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({
-    token: null,
-    role: null,
-    profileCompleted: false
-  });
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // ← prevents flash of wrong UI
 
-  // 🔁 Load from localStorage on refresh
+  // ── Load user from localStorage on app start ──────────
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
-    const profileCompleted = localStorage.getItem("profileCompleted") === "true";
+    try {
+      const raw = localStorage.getItem("user");
+      if (raw) {
+        const data = JSON.parse(raw);
 
-    if (token) {
-      setAuth({ token, role, profileCompleted });
+        // Check token expiry before restoring session
+        if (data?.token) {
+          const payload = JSON.parse(atob(data.token.split(".")[1]));
+          const isExpired = payload.exp * 1000 < Date.now();
+
+          if (!isExpired) {
+            setUser(data); // restore valid session
+          } else {
+            localStorage.removeItem("user"); // clear expired session
+          }
+        }
+      }
+    } catch {
+      localStorage.removeItem("user"); // clear corrupted data
+    } finally {
+      setLoading(false); // always stop loading
     }
   }, []);
 
-  // 🔐 LOGIN
+  // ── Login — call this after successful API login ───────
   const login = (data) => {
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("role", data.role || "");
-    localStorage.setItem(
-      "profileCompleted",
-      data.profileCompleted ? "true" : "false"
-    );
-
-    setAuth({
-      token: data.token,
-      role: data.role,
-      profileCompleted: data.profileCompleted
-    });
+    localStorage.setItem("user", JSON.stringify(data));
+    setUser(data);
   };
 
-  // 🚪 LOGOUT
+  // ── Logout — clears everything ─────────────────────────
   const logout = () => {
-    localStorage.clear();
-    setAuth({
-      token: null,
-      role: null,
-      profileCompleted: false
-    });
+    localStorage.removeItem("user");
+    setUser(null);
   };
 
-  // 🎯 UPDATE ROLE
-  const setRole = (role) => {
-    localStorage.setItem("role", role);
-    setAuth((prev) => ({ ...prev, role }));
-  };
-
-  // 🎯 UPDATE PROFILE STATUS
-  const setProfileCompleted = (value) => {
-    localStorage.setItem("profileCompleted", value ? "true" : "false");
-    setAuth((prev) => ({ ...prev, profileCompleted: value }));
-  };
+  // ── Helpers ────────────────────────────────────────────
+  const isAuthenticated = !!user?.token;
+  const isLandlord = user?.role === "landlord";
+  const isTenant = user?.role === "tenant";
 
   return (
     <AuthContext.Provider
       value={{
-        auth,
+        user,
+        loading,
         login,
         logout,
-        setRole,
-        setProfileCompleted
+        isAuthenticated,
+        isLandlord,
+        isTenant,
       }}
     >
-      {children}
+      {/* Don't render app until auth state is resolved */}
+      {!loading && children}
     </AuthContext.Provider>
   );
+};
+
+// ── Custom hook — use this everywhere instead of useContext(AuthContext) ──
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used inside AuthProvider");
+  }
+  return context;
 };

@@ -1,16 +1,15 @@
-import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { Navigate, useLocation } from "react-router-dom";
+
 const ProtectedRoute = ({ children, role }) => {
+  const { isAuthenticated, user } = useAuth();
+  const location = useLocation();
 
-    const data = JSON.parse(localStorage.getItem("user"));
-
-    // Not logged in or no token
-    if (!data || !data.token) return <Navigate to="/login" replace />;
-    const userRole = data?.user?.role;
-
-    // Wrong role
-    if (role && data.role !== role) return <Navigate to="/" replace />;
-
-    return children;
+  if (!isAuthenticated) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  if (role && user.role !== role) {
+    return <Navigate to={user.role === "landlord" ? "/landlord/dashboard" : "/tenant/dashboard"} replace />;
+  }
+  return children;
 };
 
 export default ProtectedRoute;

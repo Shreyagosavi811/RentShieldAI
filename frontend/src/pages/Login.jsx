@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import API from "../api/axios.js";
 
 const Login = () => {
+
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [form, setForm] = useState({
     email: "",
@@ -18,7 +22,7 @@ const Login = () => {
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Basic validation
@@ -27,28 +31,36 @@ const Login = () => {
     }
     try {
 
-      useEffect(async () => {
-        const { data } = await API.post("/auth/login", form);
-        
-        console.log("Login response:", data); // ← add this
 
-        localStorage.setItem("user", JSON.stringify({
-          token: data.token,
-          role: data.role,
-          name: data.name,
-          email: data.email,
-        }));
+      const { data } = await API.post("/auth/login", form);
 
-        // Redirect based on role
-        if (data.user.role === "landlord") {
-          navigate("/landlord/dashboard");
-        } else {
-          navigate("/tenant/dashboard");
-        }
-      }, []);
+      console.log("Login response:", data); // ← add this
+
+      login({
+        token: data.token,
+        role: data.user.role,
+        name: data.user.name,
+        email: data.user.email,
+      });
+
+      // Redirect based on role
+      if (data.user.role === "landlord") {
+        navigate("/landlord/dashboard");
+      } else {
+        navigate("/tenant/dashboard");
+      }
 
     } catch (error) {
-      setError(error.response?.data?.message || "Login failed");
+      console.log("FULL ERROR:", error);
+      console.log("ERROR RESPONSE:", error.response);
+      console.log("ERROR DATA:", error.response?.data);
+
+      setError(
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Login failed"
+      );
     }
   };
 
