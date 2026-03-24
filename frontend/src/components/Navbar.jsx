@@ -1,127 +1,160 @@
-import { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
+  const navLinks = [
+    { to: "/features", label: "Features" },
+    { to: "/about", label: "About" },
+    { to: "/contact", label: "Contact" },
+  ];
 
   return (
-    <nav
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
-      className="w-full bg-white shadow-sm sticky top-0 z-50"
-    >
-      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <>
+      {/* Navbar */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-slate-900/90 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/20"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <div
-            className="w-9 h-9 rounded-lg flex items-center justify-center"
-            style={{
-              background: "linear-gradient(135deg, #1a3a6b, #2563eb)",
-            }}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V7L12 2z"
-                fill="white"
-                opacity="0.9"
-              />
-              <circle cx="12" cy="13" r="3" fill="#f97316" />
-              <path
-                d="M12 10v-3"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-
-          <span
-            className="text-xl font-bold"
-            style={{ color: "#1a3a6b", letterSpacing: "-0.5px" }}
-          >
-            RentShield <span style={{ color: "#2563eb" }}>AI</span>
-          </span>
-        </Link>
-
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link to="/features" className="text-sm font-medium hover:text-blue-600 transition">
-            Features
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2.5 no-underline">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 flex items-center justify-center text-lg shadow-lg shadow-blue-500/30 flex-shrink-0">
+              🛡️
+            </div>
+            <span className="text-white font-extrabold text-lg tracking-tight">
+              RentShield <span className="text-cyan-400">AI</span>
+            </span>
           </Link>
 
-          <Link to="/about" className="text-sm font-medium hover:text-blue-600 transition">
-            About
-          </Link>
+          {/* Desktop Links */}
+          <ul className="hidden md:flex items-center gap-1 list-none m-0 p-0">
+            {navLinks.map((link) => (
+              <li key={link.to}>
+                <Link
+                  to={link.to}
+                  className="text-white/70 hover:text-white hover:bg-white/10 text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 no-underline"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-          <Link to="/team" className="text-sm font-medium hover:text-blue-600 transition">
-            Team
-          </Link>
-
-          <Link to="/profile" className="text-sm font-medium hover:text-blue-600 transition">
-            Profile
-          </Link>
-
-          <Link to="/login" className="text-sm font-medium hover:text-blue-600 transition">
-            Login
-          </Link>
-        </div>
-
-        {/* CTA Button */}
-        <div className="hidden md:flex items-center gap-3">
+          {/* Desktop CTA */}
           <Link
-            to="/signup"
-            className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg active:scale-95"
-            style={{ background: "linear-gradient(135deg, #1a3a6b, #2563eb)", boxShadow: "0 4px 14px rgba(37,99,235,0.35)" }}
-          >
-            Get Started
-          </Link>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
-          <div className="w-5 h-0.5 bg-gray-700 mb-1"></div>
-          <div className="w-5 h-0.5 bg-gray-700 mb-1"></div>
-          <div className="w-5 h-0.5 bg-gray-700"></div>
-        </button>
-
-      </div>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4">
-
-          <Link onClick={closeMenu} to="/features" className="text-sm font-medium text-gray-700">
-            Features
-          </Link>
-
-          <Link onClick={closeMenu} to="/about" className="text-sm font-medium text-gray-700">
-            About
-          </Link>
-
-          <Link onClick={closeMenu} to="/team" className="text-sm font-medium text-gray-700">
-            Team
-          </Link>
-
-          <Link onClick={closeMenu} to="/profile" className="text-sm font-medium text-gray-700">
-            Profile
-          </Link>
-
-          <Link onClick={closeMenu} to="/login" className="text-sm font-medium text-gray-700">
-            Login
-          </Link>
-
-          <Link
-            onClick={closeMenu}
-            to="/signup"
-            className="mt-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white text-center"
-            style={{ background: "linear-gradient(135deg, #1a3a6b, #2563eb)" }}
+            to="/login"
+            className="hidden md:block bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-cyan-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/40 no-underline"
           >
             Get Started
           </Link>
 
+          {/* Hamburger Button */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden flex flex-col gap-1.5 p-2.5 rounded-xl bg-white/10 border border-white/10 hover:bg-white/15 transition-all duration-200 cursor-pointer"
+            aria-label="Toggle menu"
+          >
+            <span
+              className={`block w-5 h-0.5 bg-white rounded-full transition-all duration-300 origin-center ${
+                menuOpen ? "translate-y-2 rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`block w-5 h-0.5 bg-white rounded-full transition-all duration-300 ${
+                menuOpen ? "opacity-0 scale-x-0" : ""
+              }`}
+            />
+            <span
+              className={`block w-5 h-0.5 bg-white rounded-full transition-all duration-300 origin-center ${
+                menuOpen ? "-translate-y-2 -rotate-45" : ""
+              }`}
+            />
+          </button>
         </div>
-      )}
-    </nav>
+      </nav>
+
+      {/* Overlay */}
+      <div
+        onClick={() => setMenuOpen(false)}
+        className={`md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      />
+
+      {/* Sidebar */}
+      <aside
+        className={`md:hidden fixed top-0 right-0 h-full w-72 z-50 bg-slate-900 border-l border-white/10 flex flex-col transition-transform duration-300 ease-in-out ${
+          menuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Sidebar Header */}
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+          <Link to="/" className="flex items-center gap-2.5 no-underline" onClick={() => setMenuOpen(false)}>
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 flex items-center justify-center text-base shadow-lg shadow-blue-500/30">
+              🛡️
+            </div>
+            <span className="text-white font-extrabold text-base tracking-tight">
+              RentShield <span className="text-cyan-400">AI</span>
+            </span>
+          </Link>
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="w-8 h-8 rounded-lg bg-white/10 border border-white/10 text-white text-xl flex items-center justify-center hover:bg-white/20 transition-all cursor-pointer"
+          >
+            ×
+          </button>
+        </div>
+
+        {/* Sidebar Links */}
+        <div className="flex-1 px-4 py-6 flex flex-col gap-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between text-white/75 hover:text-white hover:bg-white/10 hover:border-white/10 border border-transparent text-base font-medium px-4 py-3.5 rounded-xl transition-all duration-200 no-underline group"
+            >
+              {link.label}
+              <span className="text-white/30 group-hover:text-cyan-400 transition-all duration-200 text-sm">
+                →
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        {/* Sidebar Footer */}
+        <div className="px-5 py-6 border-t border-white/10">
+          <Link
+            to="/register"
+            onClick={() => setMenuOpen(false)}
+            className="block text-center bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-cyan-500 text-white font-medium text-sm py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/40 no-underline"
+          >
+            Get Started →
+          </Link>
+          <p className="text-center text-white/30 text-xs mt-3">
+            Smarter renting starts here
+          </p>
+        </div>
+      </aside>
+    </>
   );
 };
 
