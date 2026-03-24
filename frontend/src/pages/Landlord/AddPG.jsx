@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import API from "../../api/axios.js";
 
 const AddPG = () => {
   const navigate = useNavigate();
@@ -61,13 +62,41 @@ const AddPG = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.title || !form.address || !form.city || !form.rent) {
-      return setError("Please fill in all required fields");
+
+    try {
+      const formData = new FormData();
+
+      // Append text fields
+      Object.keys(form).forEach((key) => {
+        if (key !== "images" && key !== "facilities") {
+          formData.append(key, form[key]);
+        }
+      });
+
+      // Append facilities array
+      form.facilities.forEach((f) => {
+        formData.append("facilities", f);
+      });
+
+      // Append images
+      form.images.forEach((img) => {
+        formData.append("images", img);
+      });
+
+      await API.post("/pg", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      navigate("/landlord/dashboard");
+
+    } catch (err) {
+      console.log("ERROR:", err.response?.data || err.message);
+      setError(err.response?.data?.message || "Failed to add PG");
     }
-    console.log("PG Data:", form);
-    navigate("/landlord/dashboard");
   };
 
   const inputClass =

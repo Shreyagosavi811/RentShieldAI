@@ -2,46 +2,31 @@ import mongoose from "mongoose";
 
 const pgSchema = new mongoose.Schema(
   {
-    title: {
+    title: { type: String, required: true },
+
+    address: { type: String, required: true },
+    city: { type: String, required: true, index: true },
+    state: { type: String },
+    pincode: { type: String },
+
+    rent: { type: Number, required: true },
+    deposit: { type: Number },
+
+    roomType: {
       type: String,
-      required: true,
-      trim: true,
+      enum: ["Single", "Double", "Triple"],
     },
-    description: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: String,
-      required: true,
-    },
-    city: {
-      type: String,
-      required: true,
-      index: true,
-    },
-    rent: {
-      type: Number,
-      required: true,
-    },
-    deposit: {
-      type: Number,
-      default: 0,
-    },
-    facilities: [
-      {
-        type: String,
-      },
-    ],
-    images: [
-      {
-        type: String,
-      },
-    ],
+
+    facilities: [String],
+
+    description: String,
+    rules: String,
+
+    images: [String], // later Cloudinary URLs
+
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
   },
   { timestamps: true }

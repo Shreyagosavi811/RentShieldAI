@@ -49,7 +49,7 @@ function CustomRoutes() {
               <Search />
             </ProtectedRoute>
           } />
-        <Route path="/pg/1"
+        <Route path="/pg/:id"
           element={
             <ProtectedRoute role="tenant">
               <PGDetails />
