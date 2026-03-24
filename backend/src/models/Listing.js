@@ -1,51 +1,46 @@
-import mongoose from "mongoose";
+import Listing from "../models/Listing.js";
+import { analyzeListing } from "../services/aiService.js";
 
-const ListingSchema = new mongoose.Schema({
+export const createListing = async (req, res) => {
+  try {
+    const { title, description, city, price, review } = req.body;
 
-  title: {
-    type: String,
-    required: true
-  },
+    // 1️⃣ Save listing
+    const listing = new Listing({
+      title,
+      description,
+      city,
+      price,
+      review
+    });
 
-  description: {
-    type: String,
-    required: true
-  },
+    await listing.save();
 
-  city: {
-    type: String,
-    required: true
-  },
+    // 2️⃣ Call AI
+    const aiResult = await analyzeListing({
+      city,
+      price,
+      review,
+      description
+    });
 
-  location: {
-    type: String
-  },
+    // 3️⃣ Update listing with AI result
+    listing.trust_score = aiResult.trust_score;
+    listing.risk_level = aiResult.risk_level;
 
-  price: {
-    type: Number,
-    required: true
-  },
+    await listing.save();
 
-  image: {
-    type: String
-  },
+    // 4️⃣ Send response
+    res.json({
+      success: true,
+      listing,
+      analysis: aiResult
+    });
 
-  review: {
-    type: String
-  },
-
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
-  },
-
-  createdAt: {
-    type: Date,
-    default: Date.now
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
   }
-
-});
-
-const Listing = mongoose.model("Listing", ListingSchema);
-
-export default Listing;
+};

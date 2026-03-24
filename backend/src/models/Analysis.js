@@ -2,10 +2,24 @@ import mongoose from "mongoose";
 
 const AnalysisSchema = new mongoose.Schema({
 
+  // Optional → for listing-based analysis
   listing_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Listing",
-    required: true
+    required: false
+  },
+
+  // Optional → for user tracking
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+
+  // Store input (🔥 very useful)
+  input: {
+    city: String,
+    price: Number,
+    review: String
   },
 
   trust_score: {
@@ -33,9 +47,7 @@ const AnalysisSchema = new mongoose.Schema({
   },
 
   scam_phrases: [
-    {
-      type: String
-    }
+    String
   ],
 
   predicted_rent: {
@@ -47,9 +59,7 @@ const AnalysisSchema = new mongoose.Schema({
   },
 
   warnings: [
-    {
-      type: String
-    }
+    String
   ],
 
   explanation: {
