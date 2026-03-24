@@ -63,6 +63,7 @@ function CustomRoutes() {
         }
       />
 
+
       <Route
         path="/pg/1"
         element={
@@ -84,7 +85,8 @@ function CustomRoutes() {
         
       
     </Routes>
-  );
+
+    );
 }
 
 export default CustomRoutes;

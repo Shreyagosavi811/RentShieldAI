@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation,   } from "react-router-dom";
 import PGCard from "./PGCard";
+import API from "../../api/axios.js";
 
 const sidebarLinks = [
   { icon: "🏠", label: "My Listings", to: "/landlord" },
@@ -45,7 +46,6 @@ const Sidebar = ({ isOpen, collapsed, onClose, onToggleCollapse, user, onLogout 
               </span>
             </Link>
           )}
-
           {collapsed && (
             <Link to="/" className="no-underline">
               <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-400 flex items-center justify-center text-base shadow-lg shadow-blue-500/30">
@@ -153,11 +153,22 @@ const Sidebar = ({ isOpen, collapsed, onClose, onToggleCollapse, user, onLogout 
 };
 
 const Dashboard = () => {
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+  const [pgs, setPgs] = useState([]);
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+  useEffect(() => {
+    const fetchPGs = async () => {
+      const { data } = await API.get("/pg/");
+      console.log("Fetched PGs:", data);
+      setPgs(data);
+    };
+
+    fetchPGs();
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -264,8 +275,9 @@ const Dashboard = () => {
 
           {/* PG Cards grid */}
           <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5">
-            <PGCard isOwner />
-            <PGCard isOwner />
+            {pgs.map((pg) => (
+              <PGCard key={pg._id} pg={pg} isOwner />
+            ))}
 
             {/* Add new card */}
             <Link

@@ -3,10 +3,15 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./src/config/db.js";
 
+
 import authRoutes from "./src/routes/authRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import listingRoutes from "./src/routes/listingRoutes.js";
 import aiRoutes from "./src/routes/aiRoutes.js"; // ✅ ADD THIS
+
+
+import authRoutes from "./src/routes/authRoutes.js";
+import pgRoutes from "./src/routes/pgRoutes.js";
 
 dotenv.config();
 
@@ -21,6 +26,7 @@ connectDB();
 
 // ✅ Routes
 app.use("/api/auth", authRoutes);
+
 app.use("/api/user", userRoutes);
 app.use("/api/listings", listingRoutes);
 
@@ -28,6 +34,13 @@ app.use("/api/listings", listingRoutes);
 app.use("/api/ai", aiRoutes);
 
 // ✅ Test Route
+
+app.use("/api/pg", pgRoutes)
+app.use("/uploads", express.static("uploads"));
+
+app.use(express.json());
+
+
 app.get("/", (req, res) => {
   res.send("RentShield Backend Running");
 });

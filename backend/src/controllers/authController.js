@@ -21,6 +21,9 @@ const registerUser = async (req, res) => {
             role,
             phone
         });
+        if (!user) {
+            throw new Error("User creation failed");
+        }
 
         const token = jwt.sign(
             { id: user._id },
