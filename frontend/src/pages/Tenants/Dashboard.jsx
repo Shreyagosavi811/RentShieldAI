@@ -5,7 +5,7 @@ const sidebarLinks = [
   { icon: "🏠", label: "Dashboard", to: "/tenant/dashboard" },
   { icon: "🔍", label: "Search PGs", to: "/search" },
   { icon: "❤️", label: "Saved Listings", to: "/tenant/saved" },
-  { icon: "🤖", label: "AI Analysis", to: "/tenant/analysis" },
+  { icon: "🤖", label: "AI Analysis", to: "/tenant/ai-analysis" },
   { icon: "👤", label: "Profile", to: "/tenant/profile" },
 ];
 
