@@ -9,8 +9,8 @@ const PGCard = ({ isOwner, pg }) => {
       {/* Image */}
       <div className="relative overflow-hidden h-44">
         <img
-          src={`http://localhost:5000/${pg.images[1]}`}
-          alt={pg.name}
+          src={`http://localhost:5000/${pg?.images[1]}`}
+          alt={pg?.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
 
@@ -28,14 +28,14 @@ const PGCard = ({ isOwner, pg }) => {
         {/* Room type badge */}
         <div className="absolute top-3 right-3">
           <span className="bg-slate-900/80 backdrop-blur-sm border border-white/10 text-white/60 text-xs px-2.5 py-1 rounded-full">
-            {pg.roomType}
+            {pg?.roomType}
           </span>
         </div>
 
         {/* Price badge */}
         <div className="absolute bottom-3 left-3">
           <span className="bg-slate-900/90 backdrop-blur-sm border border-white/10 text-white text-sm font-bold px-3 py-1 rounded-xl">
-            ₹{pg.rent}
+            ₹{pg?.rent}
             <span className="text-white/40 text-xs font-normal">/mo</span>
           </span>
         </div>
@@ -43,7 +43,7 @@ const PGCard = ({ isOwner, pg }) => {
         {/* Rating badge */}
         <div className="absolute bottom-3 right-3">
           <span className="inline-flex items-center gap-1 bg-slate-900/90 backdrop-blur-sm border border-white/10 text-amber-400 text-xs font-semibold px-2.5 py-1 rounded-full">
-            ★ {pg.rating}
+            ★ {pg?.rating}
           </span>
         </div>
       </div>
@@ -54,17 +54,17 @@ const PGCard = ({ isOwner, pg }) => {
         {/* Title & location */}
         <div className="mb-3">
           <h3 className="text-white font-bold text-sm leading-tight line-clamp-1">
-            {pg.name}
+            {pg?.name}
           </h3>
           <div className="flex items-center gap-1 mt-1">
             <span className="text-white/30 text-xs">📍</span>
-            <span className="text-white/40 text-xs">{pg.location}</span>
+            <span className="text-white/40 text-xs">{pg?.location}</span>
           </div>
         </div>
 
         {/* Tags */}
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {pg.facilities
+          {pg?.facilities
             .map((tag) => (
               <span
                 key={tag}

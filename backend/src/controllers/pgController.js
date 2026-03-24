@@ -54,19 +54,34 @@ export const createPG = async (req, res) => {
 // GET ALL PGs (Search)
 export const getPGs = async (req, res) => {
   try {
-    const { city, keyword } = req.query;
+    const { city, keyword, minPrice, maxPrice, facilities } = req.query;
 
     let query = {};
 
+    // City search
     if (city) {
-      query.city = new RegExp(city, "i");
+      query.city = { $regex: city, $options: "i" };
     }
 
+    // Name search
     if (keyword) {
-      query.title = new RegExp(keyword, "i");
+      query.title = { $regex: keyword, $options: "i" };
     }
 
-    const pgs = await PG.find(query).populate("owner", "name email");
+    // Price filter
+    if (minPrice || maxPrice) {
+      query.rent = {};
+      if (minPrice) query.rent.$gte = Number(minPrice);
+      if (maxPrice) query.rent.$lte = Number(maxPrice);
+    }
+
+    // Facilities filter
+    if (facilities) {
+      const list = facilities.split(",");
+      query.facilities = { $all: list };
+    }
+
+    const pgs = await PG.find(query).populate("owner", "name");
 
     res.json(pgs);
   } catch (error) {
