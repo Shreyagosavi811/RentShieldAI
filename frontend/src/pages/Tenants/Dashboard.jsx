@@ -23,7 +23,7 @@ const quickActions = [
     icon: "🤖",
     title: "AI Safety Check",
     desc: "Analyze a PG before booking",
-    to: "/tenant/analysis",
+    to: "/tenant/ai-analysis",
     color: "from-cyan-600/30 to-cyan-500/10",
     border: "border-cyan-500/20",
     badge: "AI Powered",

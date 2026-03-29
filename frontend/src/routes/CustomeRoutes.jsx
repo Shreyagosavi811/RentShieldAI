@@ -16,6 +16,7 @@ import AIAnalysis from "../pages/Tenants/AIAnalysis";
 
 // Protected Route
 import ProtectedRoute from "./ProtectedRoute";
+import AIAnalysisReport from "../pages/Tenants/AIanalysisReport";
 
 function CustomRoutes() {
   return (
@@ -65,7 +66,7 @@ function CustomRoutes() {
 
 
       <Route
-        path="/pg/1"
+        path="/pg/:id"
         element={
           <ProtectedRoute role="tenant">
             <PGDetails />
@@ -80,7 +81,7 @@ function CustomRoutes() {
             <AIAnalysis />
           </ProtectedRoute> */}
 
-          <Route path="/tenant/ai-analysis" element={<AIAnalysis />} />
+          <Route path="/tenant/ai-analysis" element={<AIAnalysisReport />} />
 
         
       

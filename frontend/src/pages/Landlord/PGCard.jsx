@@ -2,14 +2,15 @@ import { useNavigate } from "react-router-dom";
 
 const PGCard = ({ isOwner, pg }) => {
   const navigate = useNavigate();
+  console.log("PG Data:", pg._id); // Debugging log
 
-  return (
+   return (
     <div className="group bg-white/5 hover:bg-white/8 border border-white/10 hover:border-white/20 rounded-2xl overflow-hidden transition-all duration-300">
 
       {/* Image */}
       <div className="relative overflow-hidden h-44">
         <img
-          src={`http://localhost:5000/${pg?.images[1]}`}
+          src={`http://localhost:5000/${pg?.images[0]}`}
           alt={pg?.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
@@ -54,7 +55,7 @@ const PGCard = ({ isOwner, pg }) => {
         {/* Title & location */}
         <div className="mb-3">
           <h3 className="text-white font-bold text-sm leading-tight line-clamp-1">
-            {pg?.name}
+            {pg?.title}
           </h3>
           <div className="flex items-center gap-1 mt-1">
             <span className="text-white/30 text-xs">📍</span>
@@ -81,7 +82,7 @@ const PGCard = ({ isOwner, pg }) => {
         {/* Actions */}
         {!isOwner && (
           <button
-            onClick={() => navigate(`/pg/${pg.id}`)}
+            onClick={() => navigate(`/pg/${pg._id}`)}
             className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-cyan-500 text-white text-xs font-semibold py-2.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/30 cursor-pointer"
           >
             View Details →

@@ -48,7 +48,7 @@ const AIAnalysis = () => {
 
       // ❌ Backend not responding properly
       if (!res.ok) {
-        throw new Error("Backend error");
+        throw new Error( res.statusText || "Backend error");
       }
 
       const data = await res.json();

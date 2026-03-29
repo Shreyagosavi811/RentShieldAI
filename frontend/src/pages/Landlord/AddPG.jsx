@@ -127,7 +127,7 @@ const AddPG = () => {
       <header className="sticky top-0 z-30 bg-slate-950/90 backdrop-blur-md border-b border-white/10 px-5 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
-            to="/landlord"
+            to="/landlord/dashboard"
             className="w-8 h-8 rounded-xl bg-white/10 border border-white/10 hover:bg-white/15 flex items-center justify-center text-white/60 hover:text-white transition-all no-underline text-sm"
           >
             ←
