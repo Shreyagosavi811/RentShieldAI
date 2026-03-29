@@ -11,7 +11,7 @@ SCAM_PHRASES = [
 ]
 
 
-def detect_scam_phrases(text: str):
+def detect_scam(text: str):
 
     text = text.lower()
     detected = []

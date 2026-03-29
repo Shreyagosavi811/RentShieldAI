@@ -8,21 +8,23 @@ def detect_fake(data):
     fake_probability = 0
     warnings = []
 
-    if data["image_count"] < 2:
+    if len(data["image_count"]) < 2:
         fake_probability += 0.3
         warnings.append("Very few images")
+    
+    # if len(data["review_count"]) < 5:
+    #     fake_probability += 0.3
+    #     warnings.append("Very few reviews")
 
-    if data["review_count"] < 5:
-        fake_probability += 0.3
-        warnings.append("Very few reviews")
+    description = data.get("description", "")
 
-    if data["description_length"] < 50:
+    if len(description) < 50:
         fake_probability += 0.2
         warnings.append("Very short description")
 
-    if data["rating"] < 2.5:
-        fake_probability += 0.2
-        warnings.append("Low rating")
+    # if len(data["rating"]) > 0 and len(data["rating"]) < 2.5:
+    #     fake_probability += 0.2
+    #     warnings.append("Low rating")
 
     fake_listing = fake_probability > 0.6
 

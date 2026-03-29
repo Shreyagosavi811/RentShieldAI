@@ -2,10 +2,10 @@ def generate_explanation(data, fake_prob, predicted_rent, scam_flag, sentiment):
 
     explanations = []
 
-    if data["image_count"] < 2:
+    if len(data["image_count"]) < 2:
         explanations.append("Listing contains very few images.")
 
-    if data["review_count"] < 5:
+    if len(data["review_count"]) < 5:
         explanations.append("Listing has very few reviews.")
 
     if abs(data["price"] - predicted_rent) > predicted_rent * 0.5:

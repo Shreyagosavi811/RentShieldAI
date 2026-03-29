@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+from app.controllers.analysis_controller import analyze_pg
 
 from app.schemas.request_models import (
     SentimentRequest,
@@ -19,12 +21,29 @@ from app.services.fake_detector import detect_fake
 from app.services.rent_predictor import predict_rent
 from app.services.trust_score import calculate_trust_score
 
-
 app = FastAPI(
     title="RentShield AI Service",
     description="AI microservice for rental listing risk analysis",
     version="1.0"
 )
+
+class PGRequest(BaseModel):
+    name: str
+    image_count: list = []
+    location: str
+    roomType: str
+    facilities: list
+    description: str
+    rules: str
+    rent: int
+    deposit: int
+    reviews: list = []
+
+@app.post("/analyze")
+def analyze(request: PGRequest):
+    result = analyze_pg(request.dict())
+    print("Incoming Data:", result)  # 👈 ADD THIS
+    return result
 
 
 @app.get("/")

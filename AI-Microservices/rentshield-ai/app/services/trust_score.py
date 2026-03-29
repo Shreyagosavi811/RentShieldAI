@@ -2,8 +2,8 @@ from app.services.fake_detector import detect_fake
 from app.services.rent_predictor import predict_rent
 from app.services.sentiment_analyzer import analyze_sentiment
 from app.services.explanation_engine import generate_explanation
-from app.services.geo_risk import get_geo_risk
-from app.services.scam_detector import detect_scam_phrases
+from app.services.geo_risk import analyze_location
+from app.services.scam_detector import detect_scam
 
 
 def get_risk_level(score):

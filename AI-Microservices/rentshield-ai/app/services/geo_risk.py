@@ -11,7 +11,7 @@ medium_risk_cities = [
 ]
 
 
-def get_geo_risk(city):
+def analyze_location(city):
 
     city = city.lower()
 
@@ -23,3 +23,4 @@ def get_geo_risk(city):
 
     else:
         return "LOW"
+
